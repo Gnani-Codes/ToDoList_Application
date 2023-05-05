@@ -29,7 +29,6 @@ themeCheckBoxEl.addEventListener("click", function() {
     if (!(themeCheckBoxEl.checked)) {
         bgContainer.classList.remove("bg-container-dark");
         todoHeadingEl.classList.remove("todo-head-dark");
-
     }
 
 });
@@ -44,6 +43,7 @@ function deleteIconFromList(taskCount) {
 function checkBoxStatusChange(headingId, paraId) {
     let headingElement = document.getElementById(headingId);
     let paraEl = document.getElementById(paraId);
+
     headingElement.classList.toggle("checked-style");
     paraEl.classList.toggle("checked-style");
 }
@@ -55,7 +55,7 @@ function createAndAppendTask(taskData) {
     let paraId = "para" + taskData.taskCount;
 
     let taskContanierElement = document.createElement("li");
-    taskContanierElement.classList.add("todoitem-container", "col-12", "col-lg-4", "col-xl-3");
+    taskContanierElement.classList.add("todoitem-container", "col-12", "col-lg-4");
     taskContanierElement.setAttribute("id", taskId);
     taskItemsContainer.appendChild(taskContanierElement);
 
@@ -66,15 +66,9 @@ function createAndAppendTask(taskData) {
     let checkBoxElement = document.createElement("input");
     checkBoxElement.setAttribute("type", "checkbox");
     checkBoxElement.classList.add("checkbox-input");
-    if (taskData.isChecked) {
-        checkBoxElement.setAttribute("checked");
-    }
+
     checkBoxElement.setAttribute("id", checkboxId);
     inputDeleteIconContainer.appendChild(checkBoxElement);
-
-    checkBoxElement.onclick = function() {
-        checkBoxStatusChange(headingElID, paraId);
-    };
 
     let deleteIconEl = document.createElement("i");
     deleteIconEl.classList.add("far", "fa-trash-alt", "delete-icon");
@@ -107,6 +101,22 @@ function createAndAppendTask(taskData) {
     labelParaEl.classList.add("task-label-para");
     labelParaEl.textContent = taskData.description;
     labelElement.appendChild(labelParaEl);
+
+    if (taskData.isChecked) {
+        checkBoxElement.checked = "checked";
+        checkBoxStatusChange(headingElID, paraId);
+    }
+    checkBoxElement.onclick = function() {
+        let checkBoxCondition = todoTaskData[taskData.taskCount].isChecked;
+        if (!checkBoxCondition) {
+            todoTaskData[taskData.taskCount].isChecked = true;
+        } else {
+            todoTaskData[taskData.taskCount].isChecked = false;
+        }
+        console.log(checkBoxCondition)
+
+        checkBoxStatusChange(headingElID, paraId);
+    };
 
     inputTitle.value = "";
     inputTask.value = "";

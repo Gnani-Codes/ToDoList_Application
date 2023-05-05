@@ -174,6 +174,7 @@ hr {
 .delete-icon {
     margin-top: 22px;
     margin-left: 2px;
+    color: red;
 }
 
 .input-delete-icons-container {
